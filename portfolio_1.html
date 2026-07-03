@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ARAVIND.SEC — Cybersecurity Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #070B14;
+    --surface: #0D1121;
+    --card: #111827;
+    --card-border: #1E2A42;
+    --violet: #8B5CF6;
+    --violet-dim: #6D28D9;
+    --cyan: #22D3EE;
+    --cyan-dim: #0891B2;
+    --text: #F1F5F9;
+    --muted: #64748B;
+    --muted-light: #94A3B8;
+    --red: #F43F5E;
+    --ff-head: 'Space Grotesk', sans-serif;
+    --ff-body: 'Inter', sans-serif;
+    --ff-mono: 'JetBrains Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--ff-body);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 5vw;
+    background: rgba(7, 11, 20, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--card-border);
+  }
+  .logo {
+    font-family: var(--ff-mono);
+    font-size: 1rem;
+    color: var(--cyan);
+    letter-spacing: 0.05em;
+  }
+  .logo span { color: var(--violet); }
+  nav ul {
+    display: flex; gap: 2rem; list-style: none;
+  }
+  nav a {
+    color: var(--muted-light);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-family: var(--ff-body);
+    letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--cyan); }
+
+  /* ── HERO ── */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start;
+    padding: 0 5vw;
+    overflow: hidden;
+  }
+  #canvas-bg {
+    position: absolute; inset: 0;
+    z-index: 0;
+    opacity: 0.45;
+  }
+  .hex-grid {
+    position: absolute; inset: 0; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='104'%3E%3Cpolygon points='30,2 58,17 58,47 30,62 2,47 2,17' fill='none' stroke='%231E2A42' stroke-width='0.8'/%3E%3Cpolygon points='30,52 58,67 58,97 30,112 2,97 2,67' fill='none' stroke='%231E2A42' stroke-width='0.8'/%3E%3C/svg%3E");
+    opacity: 0.6;
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 720px;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(34,211,238,0.08);
+    border: 1px solid rgba(34,211,238,0.25);
+    color: var(--cyan);
+    font-family: var(--ff-mono);
+    font-size: 0.75rem;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.08em;
+  }
+  .badge-dot {
+    width: 7px; height: 7px;
+    background: var(--cyan);
+    border-radius: 50%;
+    animation: pulse-dot 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+  h1 {
+    font-family: var(--ff-head);
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+  h1 .name-violet { color: var(--violet); }
+  h1 .name-cyan { color: var(--cyan); }
+  .hero-role {
+    font-family: var(--ff-mono);
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--muted-light);
+    margin-bottom: 1.5rem;
+    min-height: 1.8em;
+  }
+  .hero-role .cursor {
+    display: inline-block;
+    width: 2px; height: 1.1em;
+    background: var(--cyan);
+    vertical-align: text-bottom;
+    margin-left: 3px;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  .hero-desc {
+    font-size: 1.05rem;
+    color: var(--muted-light);
+    line-height: 1.75;
+    max-width: 560px;
+    margin-bottom: 2.5rem;
+  }
+  .hero-ctas {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 0.75rem 1.75rem;
+    border-radius: 8px;
+    font-family: var(--ff-head);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+    cursor: pointer;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary {
+    background: var(--violet);
+    color: #fff;
+    box-shadow: 0 4px 24px rgba(139,92,246,0.35);
+  }
+  .btn-primary:hover { background: #7C3AED; box-shadow: 0 6px 32px rgba(139,92,246,0.5); }
+  .btn-outline {
+    background: transparent;
+    color: var(--cyan);
+    border: 1.5px solid var(--cyan);
+  }
+  .btn-outline:hover { background: rgba(34,211,238,0.08); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted-light);
+    border: 1.5px solid var(--card-border);
+  }
+  .btn-ghost:hover { border-color: var(--muted); color: var(--text); }
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 6px;
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-family: var(--ff-mono);
+    letter-spacing: 0.08em;
+    animation: float 2.5s ease-in-out infinite;
+  }
+  .scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--violet), transparent);
+  }
+  @keyframes float {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 6rem 5vw;
+    position: relative;
+  }
+  .section-label {
+    font-family: var(--ff-mono);
+    font-size: 0.75rem;
+    color: var(--violet);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: var(--ff-head);
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 3rem;
+    color: var(--text);
+  }
+  .section-title span { color: var(--violet); }
+
+  /* ── ABOUT ── */
+  #about { background: var(--surface); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .about-text p {
+    color: var(--muted-light);
+    margin-bottom: 1rem;
+    line-height: 1.85;
+  }
+  .about-text p strong { color: var(--cyan); font-weight: 500; }
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: border-color 0.2s;
+  }
+  .stat-card:hover { border-color: var(--violet); }
+  .stat-num {
+    font-family: var(--ff-head);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--violet);
+    line-height: 1;
+    margin-bottom: 0.35rem;
+  }
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-family: var(--ff-mono);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── SKILLS ── */
+  #skills { background: var(--bg); }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+  .skill-group {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .skill-group:hover { transform: translateY(-3px); border-color: var(--violet); }
+  .skill-group-title {
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    color: var(--cyan);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .skill-group-title::before {
+    content: '';
+    display: block;
+    width: 8px; height: 8px;
+    background: var(--cyan);
+    border-radius: 2px;
+  }
+  .skill-tags {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .tag {
+    display: inline-block;
+    background: rgba(139,92,246,0.1);
+    border: 1px solid rgba(139,92,246,0.25);
+    color: var(--muted-light);
+    font-family: var(--ff-mono);
+    font-size: 0.78rem;
+    padding: 4px 12px;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .tag:hover {
+    background: rgba(139,92,246,0.2);
+    color: var(--text);
+    border-color: var(--violet);
+  }
+
+  /* ── PROJECTS ── */
+  #projects { background: var(--surface); }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+  }
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    display: flex; flex-direction: column;
+  }
+  .project-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--violet);
+    box-shadow: 0 12px 48px rgba(139,92,246,0.15);
+  }
+  .project-header {
+    padding: 1.75rem 1.75rem 0;
+    position: relative;
+  }
+  .project-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.25rem;
+    font-size: 1.4rem;
+  }
+  .icon-violet { background: rgba(139,92,246,0.15); border: 1px solid rgba(139,92,246,0.3); }
+  .icon-cyan   { background: rgba(34,211,238,0.12); border: 1px solid rgba(34,211,238,0.3); }
+  .project-title {
+    font-family: var(--ff-head);
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .project-desc {
+    color: var(--muted-light);
+    font-size: 0.9rem;
+    line-height: 1.75;
+    padding: 0 1.75rem;
+    flex: 1;
+  }
+  .project-stack {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding: 1.25rem 1.75rem;
+  }
+  .stack-tag {
+    display: inline-block;
+    background: rgba(34,211,238,0.08);
+    border: 1px solid rgba(34,211,238,0.2);
+    color: var(--cyan);
+    font-family: var(--ff-mono);
+    font-size: 0.72rem;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .project-footer {
+    border-top: 1px solid var(--card-border);
+    padding: 1.25rem 1.75rem;
+    display: flex; gap: 1rem;
+    align-items: center;
+  }
+  .project-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--violet);
+    font-size: 0.85rem;
+    font-family: var(--ff-mono);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .project-link:hover { color: var(--cyan); }
+  .project-link svg { width: 14px; height: 14px; }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--bg);
+    text-align: center;
+  }
+  .contact-wrap {
+    max-width: 620px;
+    margin: 0 auto;
+  }
+  .contact-desc {
+    color: var(--muted-light);
+    font-size: 1.05rem;
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+  }
+  .contact-links {
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem;
+    margin-bottom: 3rem;
+  }
+  .contact-card {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    text-decoration: none;
+    color: var(--muted-light);
+    font-family: var(--ff-mono);
+    font-size: 0.85rem;
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
+  }
+  .contact-card:hover {
+    border-color: var(--violet);
+    color: var(--text);
+    transform: translateY(-2px);
+  }
+  .contact-card svg { width: 18px; height: 18px; }
+  .contact-icon-v { color: var(--violet); }
+  .contact-icon-c { color: var(--cyan); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--card-border);
+    padding: 1.5rem 5vw;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 0.5rem;
+  }
+  footer p {
+    font-family: var(--ff-mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+  footer span { color: var(--violet); }
+
+  /* ── CANVAS ── */
+  canvas { display: block; }
+
+  /* ── REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    nav ul { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo"><span>//</span> ARAVIND.SEC</div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hex-grid"></div>
+  <canvas id="canvas-bg"></canvas>
+  <div class="hero-content">
+    <div class="badge">
+      <span class="badge-dot"></span>
+      OPEN TO INTERNSHIPS &amp; OPPORTUNITIES
+    </div>
+    <h1>
+      <span class="name-violet">ARAVIND</span><br>
+      <span class="name-cyan">P.</span>
+    </h1>
+    <p class="hero-role">
+      <span id="typewriter"></span><span class="cursor"></span>
+    </p>
+    <p class="hero-desc">
+      Cybersecurity student specializing in network security and cloud security.
+      Building real-world security tools — from phishing detectors to network scanners.
+      Actively sharpening skills on TryHackMe and HackTheBox.
+    </p>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="https://github.com/aravindashen" target="_blank" class="btn btn-outline">GitHub</a>
+      <a href="#contact" class="btn btn-ghost">Contact Me</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="reveal">
+    <p class="section-label">// 01 — about</p>
+    <h2 class="section-title">Who I <span>Am</span></h2>
+  </div>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p>
+        I'm <strong>Aravind P</strong>, a B.E. CSE (Cybersecurity) student at 
+        <strong>Sri Sairam Engineering College, Chennai</strong>, graduating in 2028.
+        I operate under the personal security brand <strong>ARAVIND.SEC</strong>.
+      </p>
+      <p>
+        My focus is on <strong>network security</strong> and <strong>cloud security</strong> — 
+        areas where I'm building depth through hands-on projects and CTF platforms. 
+        I build security tools in Python, from threat detection pipelines to network scanners.
+      </p>
+      <p>
+        I believe real security skill comes from building, not just studying — every project 
+        I ship is something that solves an actual problem.
+      </p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="stat-num">2</div>
+        <div class="stat-label">security tools shipped</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">2028</div>
+        <div class="stat-label">expected graduation</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">THM</div>
+        <div class="stat-label">TryHackMe active</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">HTB</div>
+        <div class="stat-label">HackTheBox active</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="reveal">
+    <p class="section-label">// 02 — skills</p>
+    <h2 class="section-title">Technical <span>Arsenal</span></h2>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skill-group">
+      <div class="skill-group-title">Languages</div>
+      <div class="skill-tags">
+        <span class="tag">Python</span>
+        <span class="tag">Java</span>
+        <span class="tag">Bash</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Security Focus</div>
+      <div class="skill-tags">
+        <span class="tag">Network Security</span>
+        <span class="tag">Cloud Security</span>
+        <span class="tag">Threat Detection</span>
+        <span class="tag">Risk Analysis</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Tools & Frameworks</div>
+      <div class="skill-tags">
+        <span class="tag">Streamlit</span>
+        <span class="tag">Socket Programming</span>
+        <span class="tag">Multi-threading</span>
+        <span class="tag">Git & GitHub</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Practice Platforms</div>
+      <div class="skill-tags">
+        <span class="tag">TryHackMe</span>
+        <span class="tag">HackTheBox</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="reveal">
+    <p class="section-label">// 03 — projects</p>
+    <h2 class="section-title">What I've <span>Built</span></h2>
+  </div>
+  <div class="projects-grid reveal">
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-icon icon-violet">🛡️</div>
+        <h3 class="project-title">AI-Powered Phishing &amp; Threat Detection System</h3>
+      </div>
+      <p class="project-desc">
+        Detects phishing emails and malicious URLs using a rule-based threat intelligence engine
+        with risk scoring. Modular pipeline covers text preprocessing, threat analysis, executive 
+        report generation, and actionable recommendations — all in a polished dark dashboard UI.
+      </p>
+      <div class="project-stack">
+        <span class="stack-tag">Python</span>
+        <span class="stack-tag">Streamlit</span>
+        <span class="stack-tag">Rule-Based AI</span>
+        <span class="stack-tag">NLP</span>
+        <span class="stack-tag">Risk Scoring</span>
+      </div>
+      <div class="project-footer">
+        <a href="https://github.com/aravindashen/AI-PhishingDetector" target="_blank" class="project-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+          </svg>
+          View on GitHub
+        </a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-icon icon-cyan">🔍</div>
+        <h3 class="project-title">Multi-Threaded Network Port Scanner</h3>
+      </div>
+      <p class="project-desc">
+        A fast, multi-threaded network port scanner built in Python that discovers open TCP ports, 
+        identifies running services, and assists with network reconnaissance and security auditing.
+        Built from socket primitives with concurrent thread management for speed.
+      </p>
+      <div class="project-stack">
+        <span class="stack-tag">Python</span>
+        <span class="stack-tag">Socket Programming</span>
+        <span class="stack-tag">Multi-threading</span>
+        <span class="stack-tag">TCP/IP</span>
+      </div>
+      <div class="project-footer">
+        <a href="https://github.com/aravindashen" target="_blank" class="project-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+          </svg>
+          View on GitHub
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-wrap reveal">
+    <p class="section-label">// 04 — contact</p>
+    <h2 class="section-title">Get in <span>Touch</span></h2>
+    <p class="contact-desc">
+      Open to internships, collaborations, and anything cybersecurity-related.
+      Reach out and let's build something secure.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:aravindselvam.official@gmail.com" class="contact-card">
+        <svg class="contact-icon-v" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+        </svg>
+        aravindselvam.official@gmail.com
+      </a>
+      <a href="https://www.linkedin.com/in/aravind-p-a65228340" target="_blank" class="contact-card">
+        <svg class="contact-icon-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/>
+        </svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/aravindashen" target="_blank" class="contact-card">
+        <svg class="contact-icon-v" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+        </svg>
+        github.com/aravindashen
+      </a>
+    </div>
+    <a href="mailto:aravindselvam.official@gmail.com" class="btn btn-primary" style="display:inline-flex;">
+      Send a Message
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><span>//</span> ARAVIND.SEC — Aravind P &copy; 2025</p>
+  <p>B.E. CSE (Cybersecurity) · Sri Sairam Engineering College</p>
+</footer>
+
+<script>
+/* ─── CANVAS NETWORK ANIMATION ─── */
+const canvas = document.getElementById('canvas-bg');
+const ctx = canvas.getContext('2d');
+let W, H, nodes = [];
+
+function resize() {
+  W = canvas.width  = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', () => { resize(); init(); });
+
+class Node {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+    this.vx = (Math.random() - 0.5) * 0.4;
+    this.vy = (Math.random() - 0.5) * 0.4;
+    this.r  = Math.random() * 2 + 1;
+    this.color = Math.random() > 0.5 ? '#8B5CF6' : '#22D3EE';
+    this.alpha = Math.random() * 0.6 + 0.3;
+  }
+  update() {
+    this.x += this.vx; this.y += this.vy;
+    if (this.x < 0 || this.x > W) this.vx *= -1;
+    if (this.y < 0 || this.y > H) this.vy *= -1;
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fillStyle = this.color;
+    ctx.globalAlpha = this.alpha;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+}
+
+function init() {
+  const count = Math.floor((W * H) / 14000);
+  nodes = Array.from({ length: Math.min(count, 80) }, () => new Node());
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  const maxDist = 140;
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const dx = nodes[i].x - nodes[j].x;
+      const dy = nodes[i].y - nodes[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < maxDist) {
+        const alpha = (1 - dist / maxDist) * 0.25;
+        ctx.beginPath();
+        ctx.moveTo(nodes[i].x, nodes[i].y);
+        ctx.lineTo(nodes[j].x, nodes[j].y);
+        ctx.strokeStyle = `rgba(139,92,246,${alpha})`;
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
+      }
+    }
+    nodes[i].update();
+    nodes[i].draw();
+  }
+  requestAnimationFrame(draw);
+}
+init(); draw();
+
+/* ─── TYPEWRITER ─── */
+const roles = [
+  'Network Security Student',
+  'Threat Detection Builder',
+  'Cloud Security Learner',
+  'Python Security Dev',
+];
+let ri = 0, ci = 0, deleting = false;
+const tw = document.getElementById('typewriter');
+function type() {
+  const word = roles[ri];
+  if (!deleting) {
+    tw.textContent = word.slice(0, ++ci);
+    if (ci === word.length) { deleting = true; setTimeout(type, 1800); return; }
+    setTimeout(type, 60);
+  } else {
+    tw.textContent = word.slice(0, --ci);
+    if (ci === 0) { deleting = false; ri = (ri + 1) % roles.length; setTimeout(type, 300); return; }
+    setTimeout(type, 35);
+  }
+}
+setTimeout(type, 800);
+
+/* ─── SCROLL REVEAL ─── */
+const revealEls = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+revealEls.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
